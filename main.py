@@ -31,7 +31,7 @@ def main() -> None:
     days_to_ua: int = int(time_to_ua.total_seconds() // 86400)
 
     if time_to_ua > one_week:
-        if now.hour == 18:
+        if now.hour == 16 and now.minute == 55:
             send_to_discord(f"## Plus que {days_to_ua} jours avant l'UA ! :clock:")
         return
 
