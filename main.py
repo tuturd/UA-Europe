@@ -16,6 +16,13 @@ def send_to_discord(message: str) -> None:
     requests.post(WEBHOOK_URL, data={'content': message})
 
 
+def log(message: str) -> None:
+    """Log a message to main.log"""
+
+    with open('main.log', 'a') as log_file:
+        log_file.write(f'{datetime.now()} - {message}\n')
+
+
 def main() -> None:
     """Main function"""
 
@@ -25,6 +32,7 @@ def main() -> None:
 
     if hours_to_ua < 1:
         send_to_discord('# Ils sont là ! :tada:')
+        log('# Ils sont là ! :tada:')
         return
 
     one_week: timedelta = timedelta(weeks=1)
@@ -33,9 +41,13 @@ def main() -> None:
     if time_to_ua > one_week:
         if now.hour == 16 and now.minute == 55:
             send_to_discord(f"## Plus que {days_to_ua} jours avant l'UA ! :clock:")
+            log(f"## Plus que {days_to_ua} jours avant l'UA ! :clock:")
+        else:
+            log('nothing to do')
         return
 
     send_to_discord(f'Ils débarquent dans **{hours_to_ua} heures** ! :fearful:')
+    log(f'Ils débarquent dans **{hours_to_ua} heures** ! :fearful:')
 
 
 # MAIN
